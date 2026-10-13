@@ -54,12 +54,14 @@ The program ran successfully and all required functionality described in the ass
 
 # Results Output
 Driver Program Results:
+ [[391 452 837   4   1 831   3   1 372 323]
  [100  97   0   1   0   1   0   0 102  86]
  [106 128   0 832 836   5 833 836 157 223]
  [240 160   0   0   0   0   1   0 206 205]]
 12.54257153610685
 
 NRF1 Driver Program Results:
+[[19175 19336 19982 18586 19197 19955 19121 19033 19021 18947]
  [24705 26885 25540 25618 26974 25988 24796 25378 25447 24288]
  [27611 25652 25988 26627 25359 24721 26184 26144 24764 27040]
  [18415 17989 18939 19074 18659 19434 19652 18780 19154 18835]]
@@ -68,7 +70,7 @@ NRF1 Driver Program Results:
 NRF1 dataset (90,061 sequences, k=10, 10,000 rounds): IC remained low (under 0.2) and was climbing only very slowly even after several thousand rounds, in contrast to the promoter dataset's strong, confident result. See Evidence and Reasoning below for why.
 
 # Evidence and Reasoning
-The promoter dataset's PFM shows near-unanimous agreement at several positions (834-836 out of ~837 sequences), and an IC of 12.57 out of a theoretical max of 20 for k=10 is strong evidence the algorithm correctly converges on a real, non-random motif when given enough rounds relative to its dataset size, consistent with the known Shine-Dalgarno pre-filter applied to that data.
+The promoter dataset's PFM shows near-unanimous agreement at several positions (834-836 out of ~837 sequences), and an IC of 12.54 out of a theoretical max of 20 for k=10 is strong evidence the algorithm correctly converges on a real, non-random motif when given enough rounds relative to its dataset size, consistent with the known Shine-Dalgarno pre-filter applied to that data.
 
 The NRF1 dataset did not show this same convergence within the specified 10,000 rounds. We worked out why mathematically rather than assuming a bug. The algorithm updates exactly one randomly chosen sequence per round. With 10,000 rounds spread across 837 promoter sequences, each sequence gets updated about 12 times on average, which is enough to converge. Spread across 90,061 NRF1 sequences, each sequence gets updated only about 0.11 times on average, meaning the large majority of sequences never leave their random initial guess by the time the loop ends. This fully explains the low IC without needing to assume anything is wrong with the implementation itself, and we verified that the code runs correctly and without error on both datasets at full scale.
 
